@@ -218,18 +218,19 @@ function getRectangleString(width, height) {
   const c = '┘';
   const d = '└';
   const side = '│';
-  // const tt = height- 2
+  // const tt = height- 2
   const space = ' '.repeat(width - 2);
-  // const spaceHeigth = (`side+space+side\n`)
-  // const spaceHeigth1 = `side+space+side\n`.repeat(height - 2)
+  // const spaceHeigth = (`side+space+side\n`)
+  // const spaceHeigth1 = `side+space+side\n`.repeat(height - 2)
   const topAndBottom = '─'.repeat(width - 2);
-  // const gg = height =>
-  // const result = `┌${topAndBottom}┐\n${spaceHeigth1}└${topAndBottom}┘`
+  // const gg = height =>
+  // const result = `┌${topAndBottom}┐\n${spaceHeigth1}└${topAndBottom}┘`
   let result;
   if (height === 2) {
-    result = (a + topAndBottom + b) + `\n` + (d + topAndBottom + c);
+    result = `${(a + topAndBottom + b)}${'\n'}${(d + topAndBottom + c)}`;
+    result = `${(a + topAndBottom + b)}${'\n'}${(d + topAndBottom + c)}`;
   } else {
-    result = (a + topAndBottom + b) + `\n` + ((side + space + side) + `\n`).repeat(height - 2) + (d + topAndBottom + c);
+    result = `${a + topAndBottom + b}\n${(`${side + space + side}\n`).repeat(height - 2)}${(d + topAndBottom + c)}`;
   }
   // console.log(result)
   return result;
