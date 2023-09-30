@@ -30,9 +30,11 @@
 function getFizzBuzz(num) {
   if (num % 3 === 0 && num % 5 === 0) {
     return 'FizzBuzz';
-  } else if (num % 5 === 0) {
+  }
+  if (num % 5 === 0) {
     return 'Buzz';
-  } else if (num % 3 === 0) {
+  }
+  if (num % 3 === 0) {
     return 'Fizz';
   }
   return num;
@@ -138,10 +140,10 @@ function isTriangle(a, b, c) {
  */
 function doRectanglesOverlap(rect1, rect2) {
   if (
-    rect2.width < rect1.left ||
-    rect2.left > rect1.width ||
-    rect2.top > rect1.height ||
-    rect2.height < rect1.top
+    rect2.width < rect1.left
+    || rect2.left > rect1.width
+    || rect2.top > rect1.height
+    || rect2.height < rect1.top
   ) {
     return false;
   }
@@ -177,9 +179,9 @@ function doRectanglesOverlap(rect1, rect2) {
  */
 function isInsideCircle(circle, point) {
   return (
-    (Number(circle.center.x) - Number(point.x)) ** 2 +
-      (Number(circle.center.y) - Number(point.y)) ** 2 <
-    Number(circle.radius) ** 2
+    (Number(circle.center.x) - Number(point.x)) ** 2
+    + (Number(circle.center.y) - Number(point.y)) ** 2
+    < Number(circle.radius) ** 2
   );
 }
 
@@ -242,9 +244,9 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
     lastBacket = ')';
   }
   if (a < b) {
-    return `${firstBacket}${a},${b}${lastBacket}`;
+    return `${firstBacket}${a}, ${b}${lastBacket}`;
   }
-  return `${firstBacket}${b},${a}${lastBacket}`;
+  return `${firstBacket}${b}, ${a}${lastBacket}`;
 }
 
 
@@ -308,7 +310,8 @@ function isCreditCardNumber(ccn) {
     arr[i] = (arr[i] * 2) > 9 ? arr[i] * 2 - 9 : arr[i] * 2;
   }
   const sum = arr.reduce((total, a) => +total + +a);
-  return +String(ccn)[String(ccn).length - 1] === sum * 9 % 10;
+  const sumAnd9 = sum * 9;
+  return +String(ccn)[String(ccn).length - 1] === sumAnd9 % 10;
 }
 
 /**
@@ -326,9 +329,9 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-    const sum = String(num).split('').reduce((total, a) => +total + +a);
-    const sum2 = String(sum).split('').reduce((total, a) => +total + +a);
-    return sum > 9 ? sum2 : sum;
+  const sum = String(num).split('').reduce((total, a) => +total + +a);
+  const sum2 = String(sum).split('').reduce((total, a) => +total + +a);
+  return sum > 9 ? sum2 : sum;
 }
 
 
@@ -354,6 +357,33 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true
  */
 function isBracketsBalanced(str) {
+  if (str.length === 0) {
+    return true;
+  }
+  const pairs = {
+    '<': '>',
+    '[': ']',
+    '(': ')',
+    '{': '}',
+  };
+  const openBracket = Object.keys(pairs);
+  const result = [];
+  for (let i = 0; i < str.length; i += 1) {
+    if (openBracket.includes(str[i])) {
+      result.push(str[i]);
+    } else {
+      if (result.length === 0) {
+        return false;
+      }
+      const top = result[result.length - 1];
+      if (pairs[top] === str[i]) {
+        result.pop();
+      } else {
+        return false;
+      }
+    }
+  }
+  return result.length === 0;
 }
 
 
@@ -378,6 +408,7 @@ function isBracketsBalanced(str) {
  *    365, 10 => '365'
  */
 function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -394,6 +425,15 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(pathes) {
+  let result = '';
+  const splitOfPathes = pathes.map((item) => item.split('/'));
+  const purposeOfComparison = splitOfPathes[0];
+  for (let i = 0; i < purposeOfComparison.length; i += 1) {
+    if (splitOfPathes.every((item) => item[i] === purposeOfComparison[i])) {
+      result = `${result + purposeOfComparison[i]}/`;
+    }
+  }
+  return result;
 }
 
 
@@ -416,6 +456,7 @@ function getCommonDirectoryPath(pathes) {
  *
  */
 function getMatrixProduct(m1, m2) {
+  return m1 + m2;
 }
 
 
@@ -450,6 +491,43 @@ function getMatrixProduct(m1, m2) {
  *
  */
 function evaluateTicTacToePosition(position) {
+  const winnerPositions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  const xPositions = [];
+  const oPositions = [];
+  let result;
+  for (let i = 0; i < 3; i += 1) {
+    if (position[i].length < 3) {
+      position[i].push('');
+    }
+  }
+  const start = position.flat();
+  for (let i = 0; i < 9; i += 1) {
+    if (start[i] === 'X') {
+      xPositions.push(i);
+    } else if (start[i] === '0') {
+      oPositions.push(i);
+    }
+  }
+  function check(parent, child) {
+    return child.every((item) => parent.includes(item));
+  }
+  for (let i = 0; i < winnerPositions.length; i += 1) {
+    if (check(xPositions, winnerPositions[i])) {
+      result = 'X';
+    } else if (check(oPositions, winnerPositions[i])) {
+      result = '0';
+    }
+  }
+  return result;
 }
 
 

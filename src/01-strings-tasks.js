@@ -117,11 +117,7 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'cat', 3 => 'catcatcat'
  */
 function repeatString(value, count) {
-  let result = '';
-  for (let i = 0; i < count; i + 1) {
-    result += value;
-  }
-  return result;
+  return value.repeat(count);
 }
 
 /**
@@ -213,27 +209,16 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-  const a = '┌';
-  const b = '┐';
-  const c = '┘';
-  const d = '└';
-  const side = '│';
-  // const tt = height- 2
-  const space = ' '.repeat(width - 2);
-  // const spaceHeigth = (`side+space+side\n`)
-  // const spaceHeigth1 = `side+space+side\n`.repeat(height - 2)
-  const topAndBottom = '─'.repeat(width - 2);
-  // const gg = height =>
-  // const result = `┌${topAndBottom}┐\n${spaceHeigth1}└${topAndBottom}┘`
-  let result;
-  if (height === 2) {
-    result = `${(a + topAndBottom + b)}${'\n'}${(d + topAndBottom + c)}`;
-    result = `${(a + topAndBottom + b)}${'\n'}${(d + topAndBottom + c)}`;
-  } else {
-    result = `${a + topAndBottom + b}\n${(`${side + space + side}\n`).repeat(height - 2)}${(d + topAndBottom + c)}`;
+  const top = `┌${'─'.repeat(width - 2)}┐\n`;
+  let middle = `│${' '.repeat(width - 2)}│\n`;
+  const bottom = `└${'─'.repeat(width - 2)}┘\n`;
+  for (let i = 3; i < height; i += 1) {
+    middle += middle;
   }
-  // console.log(result)
-  return result;
+  if (height === 2) {
+    return top + bottom;
+  }
+  return top + middle + bottom;
 }
 /**
  * Encode specified string with ROT13 cipher

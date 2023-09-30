@@ -21,14 +21,7 @@
  *    [0, 1, 2, 3, 4, 5], 5    => 5
  */
 function findElement(arr, value) {
-  let result = 0;
-  for (let i = 0; i < arr.length; i + 1) {
-    if (arr[i] === value) {
-      return result;
-    }
-    result += 1;
-  }
-  return -1;
+  return arr.indexOf(value);
 }
 
 /**
@@ -45,7 +38,7 @@ function findElement(arr, value) {
 function generateOdds(len) {
   const a = len * 2;
   const result = [];
-  for (let i = 0; i < a; i + 1) {
+  for (let i = 0; i < a; i += 1) {
     if (i % 2 !== 0) {
       result.push(i);
     }
@@ -84,7 +77,7 @@ function doubleArray(arr) {
  */
 function getArrayOfPositives(arr) {
   const result = [];
-  for (let i = 0; i < arr.length; i + 1) {
+  for (let i = 0; i < arr.length; i += 1) {
     if (arr[i] > 0) {
       result.push(arr[i]);
     }
@@ -105,7 +98,7 @@ function getArrayOfPositives(arr) {
  */
 function getArrayOfStrings(arr) {
   const result = [];
-  for (let i = 0; i < arr.length; i + 1) {
+  for (let i = 0; i < arr.length; i += 1) {
     if (typeof (arr[i]) === 'string') {
       result.push(arr[i]);
     }
@@ -262,7 +255,7 @@ function toArrayOfSquares(arr) {
 function getMovingSum(arr) {
   let a = 0;
   const result = [];
-  for (let i = 0; i < arr.length; i + 1) {
+  for (let i = 0; i < arr.length; i += 1) {
     a += arr[i];
     result.push(a);
   }
@@ -282,7 +275,7 @@ function getMovingSum(arr) {
  */
 function getSecondItems(arr) {
   const result = [];
-  for (let i = 1; i < arr.length; i + 1) {
+  for (let i = 1; i < arr.length; i += 1) {
     if (i % 2 !== 0) {
       result.push(arr[i]);
     }
@@ -403,7 +396,7 @@ function getItemsSum(arr) {
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
 function getFalsyValuesCount(arr) {
-  return arr.map((a) => !a).length;
+  return arr.filter((value) => !value).length;
 }
 
 /**
@@ -640,25 +633,14 @@ function getElementByIndexes(arr, indexes) {
  *
  */
 function swapHeadAndTail(arr) {
-  if (arr.length === 2) {
-    return arr.reverse();
+  const num = arr.length;
+  if (num > 1) {
+    const start = arr.splice(0, Math.floor(num / 2));
+    const end = arr.splice(-Math.floor(num / 2));
+    arr.push(...start);
+    arr.unshift(...end);
   }
-  let result = [];
-  if (arr.length % 2 === 0) {
-    result.push(`${arr.slice(arr.length / 2)},${arr.slice(0, arr.length / 2)}`);
-    // alert('1111');
-  } else {
-    result.push(`${arr.slice(arr.length / 2 + 0.5)},${arr.slice(arr.length / 2 - 0.5, arr.length / 2 + 0.5)},${arr.slice(0, arr.length / 2 - 0.5)}`);
-    // alert('22222');
-  }
-  result = result.join();
-  const newResult = [];
-  for (let i = 0; i < result.length; i + 1) {
-    if (i % 2 === 0) {
-      newResult.push(Number(result[i]));
-    }
-  }
-  return newResult;
+  return arr;
 }
 
 
